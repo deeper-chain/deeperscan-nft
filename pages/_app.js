@@ -1,8 +1,9 @@
-import '../styles/globals.css'
+import { appWithTranslation } from 'next-i18next';
+// import nextI18NextConfig from '../next-i18next.config.js'
+
 import 'antd/dist/antd.css';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const MyApp = ({ Component, pageProps }) => <Component {...pageProps} />;
 
-export default MyApp;
+// https://github.com/i18next/next-i18next#unserialisable-configs
+export default appWithTranslation(MyApp /*, nextI18NextConfig */);

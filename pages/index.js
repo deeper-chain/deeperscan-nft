@@ -1,37 +1,29 @@
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-import { useTranslation } from 'next-i18next'
+import { useTranslation, Trans } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import Header from '../components/Header/Header'
-import { Footer } from '../components/Foot'
+import Header from 'components/Header/Header'
 
 const Homepage = () => {
-
-  const router = useRouter()
-  const { t } = useTranslation('common')
+  const router = useRouter();
+  const { t } = useTranslation('common');
 
   return (
     <>
+      <Header></Header>
       <main>
-        <Header />
-        <hr style={{ marginTop: 20, width: '90%' }} />
-        <div>
-          <Link
-            href='/'
-            locale={router.locale === 'en' ? 'zh' : 'en'}
-          >
-            <button>
-              {t('change-locale', { changeTo: router.locale === 'en' ? 'zh' : 'en' })}
-            </button>
-          </Link>
-        </div>
+        {t('hello')}
       </main>
-      <Footer />
     </>
-  )
-}
+  );
+};
 
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+});
 
-
-export default Homepage
+export default Homepage;
