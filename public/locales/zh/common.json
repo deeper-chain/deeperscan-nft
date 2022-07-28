@@ -1,3 +1,6 @@
 {
-  "hello": "你好"
+  "Search by account": "请输入 Deeper Chain 地址搜索",
+  "Search": "搜索",
+  "Owner": "钱包地址",
+  "Count": "数量"
 }

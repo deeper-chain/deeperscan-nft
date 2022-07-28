@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@polkadot/api": "^8.13.1",
     "ahooks": "^3.5.2",
     "antd": "^4.21.7",
