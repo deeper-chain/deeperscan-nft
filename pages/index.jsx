@@ -1,7 +1,6 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { useTranslation, Trans } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import Header from 'components/Header/Header';
@@ -10,8 +9,7 @@ import { getNftClassList, searchDeeperChain } from 'services/polkadot';
 
 import styles from './index.module.scss';
 
-import { Input, Button } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
 import { useEffect, useState } from 'react';
 
 const Homepage = () => {
@@ -24,16 +22,22 @@ const Homepage = () => {
     data: searchDeeperChainData,
     run: searchDeeperChainRun,
   } = useRequest(searchDeeperChain, {
-    manual: true
+    manual: true,
   });
   const toSearchDeeperChain = val => {
-    setSearchAddress(val)
+    setSearchAddress(val);
     searchDeeperChainRun(val);
   };
 
   useEffect(() => {
     console.log(searchDeeperChainData);
   }, [searchDeeperChainData]);
+
+  useEffect(() => {
+    if (router.query.address) {
+      toSearchDeeperChain(router.query.address);
+    }
+  }, [router.query]);
 
   return (
     <>
@@ -56,21 +60,23 @@ const Homepage = () => {
               <Input.Search
                 placeholder={t('Search by account')}
                 allowClear
-                enterButton={t("Search")}
+                enterButton={t('Search')}
                 size="large"
                 onSearch={toSearchDeeperChain}
               ></Input.Search>
             </div>
           </div>
         </div>
-        {searchAddress && <div className={styles['owner-box']}>
-          <div>
-          {t("Owner")}: <b>{searchAddress}</b>
+        {searchAddress && (
+          <div className={styles['owner-box']}>
+            <div style={{ wordBreak: 'break-all' }}>
+              {t('Owner')}: <b>{searchAddress}</b>
+            </div>
+            <div>
+              {t('Count')}: <b>{searchDeeperChainData && searchDeeperChainData.length}</b>
+            </div>
           </div>
-          <div>
-          {t("Count")}: <b>{searchDeeperChainData && searchDeeperChainData.length}</b>
-          </div>
-        </div>}
+        )}
         <div className={styles['nft-list-box']}>
           {searchDeeperChainData &&
             searchDeeperChainData.map((it, index) => {
@@ -82,8 +88,7 @@ const Homepage = () => {
                   <div className={styles['item-text-box']}>
                     <div className={styles['name-text']}>{it.name}</div>
                     <div className={styles['description-box']}>
-                      <div dangerouslySetInnerHTML={{__html: it.description}}>
-                      </div>
+                      <div dangerouslySetInnerHTML={{ __html: it.description }}></div>
                     </div>
                   </div>
                 </div>
