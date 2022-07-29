@@ -31,20 +31,27 @@
 
 .nft-list-box {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   max-width: 1200px;
   margin: 0 auto;
   padding: 30px 0;
   .nft-item-box {
     display: flex;
-    padding-bottom: 30px;
+    padding: 10px 30px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 46%;
+    transition: all 0.3s ease;
     margin-bottom: 30px;
-    border-bottom: 1px solid #ddd;
-
+    &:hover {
+      box-shadow: 0 0 10px #ddd;
+    }
   }
   .item-image-box {
     display: flex;
     align-items: center;
-    width: 20%;
+    width: 100%;
     img {
       width: 100%;
     }
@@ -52,7 +59,7 @@
   .item-text-box {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 10px 30px;
     .name-text {
       font-size: 20px;
@@ -75,6 +82,7 @@
     .nft-item-box {
       flex-direction: column;
       align-items: center;
+      width: 90%;
     }
     .item-image-box {
       width: 60%;

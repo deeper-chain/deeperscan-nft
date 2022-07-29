@@ -25,8 +25,13 @@ const Homepage = () => {
     manual: true,
   });
   const toSearchDeeperChain = val => {
-    setSearchAddress(val);
-    searchDeeperChainRun(val);
+    router.push({
+      query: {
+        address: val,
+      },
+    });
+    // setSearchAddress(val);
+    // searchDeeperChainRun(val);
   };
 
   useEffect(() => {
@@ -35,7 +40,8 @@ const Homepage = () => {
 
   useEffect(() => {
     if (router.query.address) {
-      toSearchDeeperChain(router.query.address);
+      setSearchAddress(router.query.address);
+      searchDeeperChainRun(router.query.address);
     }
   }, [router.query]);
 
