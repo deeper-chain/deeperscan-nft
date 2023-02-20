@@ -1,5 +1,5 @@
 import { WsProvider, ApiPromise } from '@polkadot/api';
-import {hexToString, hexToU8a} from '@polkadot/util'
+import { hexToString, hexToU8a } from '@polkadot/util';
 
 // function hexToString(str1) {
 //   var hex = str1.toString();
@@ -17,7 +17,7 @@ export async function getApi() {
     return globalApi;
   }
 
-  const deeperChainWss = 'wss://mainnet-deeper-chain.deeper.network';
+  const deeperChainWss = 'wss://mainnet-full.deeper.network';
   const wsProvider = new WsProvider(deeperChainWss);
   globalApi = await ApiPromise.create({ provider: wsProvider });
   return globalApi;
@@ -36,7 +36,7 @@ export async function getNftClassList() {
   classMetaList = classMetaList.map(it => {
     let str = it.toString();
     let json = JSON.parse(`{${str.split(',{')[1]}`);
-    let jsonData = JSON.parse(hexToString(json.data.slice(2)))
+    let jsonData = JSON.parse(hexToString(json.data.slice(2)));
     return jsonData;
   });
   // nftList = nftList.map(it => {
@@ -45,7 +45,7 @@ export async function getNftClassList() {
   //   let jsonData = JSON.parse(hexToString(json.data.slice(2)))
   //   return jsonData;
   // });
-  return classMetaList
+  return classMetaList;
 }
 
 export async function searchDeeperChain(deeperChain) {
@@ -53,7 +53,7 @@ export async function searchDeeperChain(deeperChain) {
     let api = await getApi();
     let keys = await api.query.uniques.account.entries(deeperChain);
     if (!keys) {
-      return []
+      return [];
     }
 
     const ids = [];
@@ -62,10 +62,9 @@ export async function searchDeeperChain(deeperChain) {
     keys.forEach(([key]) => {
       ids.push([key.args[1], key.args[2]]);
     });
-    
 
     for (const item of ids) {
-      let nft = await api.query.uniques.instanceMetadataOf(item[0], item[1])
+      let nft = await api.query.uniques.instanceMetadataOf(item[0], item[1]);
       if (!nft) {
         continue;
       }
@@ -77,14 +76,11 @@ export async function searchDeeperChain(deeperChain) {
     }
     return nftList.reduce((pre, it) => {
       try {
-        pre.push(JSON.parse(it)) 
-      } catch(e) {
-        
-      }
-      return pre
-    }, [])
+        pre.push(JSON.parse(it));
+      } catch (e) {}
+      return pre;
+    }, []);
   } catch (error) {
-    return []
+    return [];
   }
-  
 }
