@@ -49,9 +49,11 @@ export async function getNftClassList() {
 }
 
 export async function searchDeeperChain(deeperChain) {
+  console.log('start search deeperChain');
   try {
     let api = await getApi();
     let keys = await api.query.uniques.account.entries(deeperChain);
+    console.log(keys);
     if (!keys) {
       return [];
     }
@@ -74,12 +76,16 @@ export async function searchDeeperChain(deeperChain) {
         nftList.push(nft.data);
       }
     }
-    return nftList.reduce((pre, it) => {
+    let result = nftList.reduce((pre, it) => {
       try {
-        pre.push(JSON.parse(it));
-      } catch (e) {}
+        pre = pre.push(JSON.parse(it));
+      } catch (e) {
+        console.log(e);
+      }
       return pre;
     }, []);
+    console.log(result);
+    return result;
   } catch (error) {
     return [];
   }
