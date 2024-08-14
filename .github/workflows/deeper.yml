@@ -1,0 +1,11 @@
+name: Build and deploy
+
+on:
+  push:
+    branches:
+      - master
+permissions: write-all
+jobs:
+  common:
+    uses: deeper-chain/github-actions/.github/workflows/common.yml@master
+    secrets: inherit
