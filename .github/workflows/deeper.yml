@@ -9,3 +9,4 @@ jobs:
   common:
     uses: deeper-chain/github-actions/.github/workflows/common.yml@master
     secrets: inherit
+
